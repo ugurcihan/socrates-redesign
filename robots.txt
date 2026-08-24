@@ -1,0 +1,7 @@
+# Not live yet — this deployment is a redesign concept pending client
+# content sign-off and the socratesevent.com domain cutover. Flip to
+# "Allow: /" (and update the Sitemap host below) at go-live.
+User-agent: *
+Disallow: /
+
+Sitemap: https://socrates-redesign.vercel.app/sitemap.xml
