@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socrates Creative Events — Yeniden Tasarım Konsepti</title>
+<meta name="description" content="Socrates Creative Events için hazırlanmış bağımsız UI/UX & motion design yeniden tasarım konsepti.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="concept-badge">
+  <span>Konsept Yeniden Tasarım</span>
+  <a href="https://www.socratesevent.com/" target="_blank" rel="noopener">Orijinal site ↗</a>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="nav-logo">
+    <span class="nav-logo-mark">S</span>
+    <span class="nav-logo-text">SOCRATES<em>Creative Events</em></span>
+  </a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#top" data-nav>Ana Sayfa</a>
+    <a href="#about" data-nav>Hakkımızda</a>
+    <a href="#services" data-nav>Hizmetler</a>
+    <a href="#references" data-nav>Referanslar</a>
+    <a href="#contact" data-nav>İletişim</a>
+  </nav>
+  <a href="#contact" class="btn btn-ghost nav-cta">Projenizi Anlatın</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main>
+  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <section class="hero" id="top">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-photo" style="background-image:url('assets/img/hero-stadium.jpg')"></div>
+    <div class="hero-gradient"></div>
+    <div class="scroll-cue">
+      <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+      <span>Aşağı Kaydırın</span>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-main">
+        <p class="eyebrow reveal-up">Kurumsal Etkinlik &amp; Creative Ajansı</p>
+        <h1 class="hero-title">
+          <span class="line"><span class="word reveal-word">Her</span> <span class="word reveal-word">Detay</span></span>
+          <span class="line"><span class="word reveal-word em">Bir</span> <span class="word reveal-word em">Sahne.</span></span>
+        </h1>
+        <p class="hero-sub reveal-up" style="transition-delay:.5s">Stratejiden ışığa, konseptten son detaya — kurumsal etkinliklerinizi uçtan uca tasarlıyor ve yönetiyoruz.</p>
+        <div class="hero-cta reveal-up" style="transition-delay:.62s">
+          <a href="#contact" class="btn btn-solid">Projenizi Konuşalım</a>
+          <a href="#references" class="btn btn-line">İşlerimize Bakın <i>→</i></a>
+        </div>
+      </div>
+      <div class="hero-aside reveal-up" style="transition-delay:.7s">
+        <p class="hero-aside-quote">"Fikirden sahneye, tek çatı altında."</p>
+        <div class="hero-aside-meta">
+          <strong>48+ Marka</strong>
+          Birlikte çalıştığımız iş ortakları
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker-strip">
+    <div class="ticker-track">
+      <span>LANSMANLAR &amp; AÇILIŞLAR</span><i>✦</i>
+      <span>BAYİ TOPLANTILARI</span><i>✦</i>
+      <span>HİBRİT ETKİNLİKLER</span><i>✦</i>
+      <span>ÖDÜL TÖRENLERİ &amp; PARTİLER</span><i>✦</i>
+      <span>İÇ İLETİŞİM TOPLANTILARI</span><i>✦</i>
+      <span>BASIN TOPLANTILARI</span><i>✦</i>
+      <span>LANSMANLAR &amp; AÇILIŞLAR</span><i>✦</i>
+      <span>BAYİ TOPLANTILARI</span><i>✦</i>
+      <span>HİBRİT ETKİNLİKLER</span><i>✦</i>
+      <span>ÖDÜL TÖRENLERİ &amp; PARTİLER</span><i>✦</i>
+      <span>İÇ İLETİŞİM TOPLANTILARI</span><i>✦</i>
+      <span>BASIN TOPLANTILARI</span><i>✦</i>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <div class="about-media reveal-clip">
+      <div class="about-media-frame tilt-card">
+        <img src="assets/img/vertical-shot.jpg" alt="Socrates Creative Events sahne prodüksiyonu">
+        <div class="about-media-vignette"></div>
+      </div>
+      <div class="about-media-badge">
+        <strong>48+</strong>
+        <span>Marka İş Ortağı</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <p class="eyebrow reveal-up">Hakkımızda</p>
+      <h2 class="reveal-up">Yeni Nesil<br>Etkinlik Ajansı</h2>
+      <p class="reveal-up">Socrates Creative Events, kurumsal etkinliklerinizde marka stratejiniz doğrultusunda doğru mesajı ve etkiyi bırakması için gerekli bütçe optimizasyonu, fark yaratan içerik tasarımı ve markalama gibi unsurları bir araya getiren yeni nesil etkinlik ajansıdır.</p>
+      <p class="reveal-up">Planlamadan prodüksiyona, sahne tasarımından son konuğun konaklamasına kadar her adımı tek çatı altında yönetiyoruz.</p>
+      <div class="stat-grid reveal-up">
+        <div class="stat">
+          <span class="stat-num" data-count="10000" data-suffix="+">0</span>
+          <span class="stat-label">Gecelik Konaklama Organizasyonu</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="1200" data-suffix="+">0</span>
+          <span class="stat-label">Yıllık Vize İşlemi</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="48" data-suffix="+">0</span>
+          <span class="stat-label">Marka İş Ortağı</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="6" data-suffix="">0</span>
+          <span class="stat-label">Uçtan Uca Hizmet Alanı</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Neler Yapıyoruz</p>
+      <h2 class="reveal-up">Uçtan Uca Etkinlik Çözümleri</h2>
+    </div>
+    <div class="service-grid">
+
+      <div class="service-card tilt-card reveal-up">
+        <span class="service-num">01</span>
+        <h3>Etkinlik Yönetimi</h3>
+        <p>Doğru planlama ile doğru zamanda, doğru yerde, doğru insanlarla buluşarak unutulmaz anılar yaratıyoruz.</p>
+        <span class="service-more">Detaylar <i>→</i></span>
+      </div>
+
+      <div class="service-card tilt-card reveal-up featured">
+        <span class="service-num">02</span>
+        <h3>Tasarım &amp; Konsept</h3>
+        <p>Stratejinize uygun konsept, görsel tasarım ve markalamayı yaratıcı fikirlerle birleştiriyoruz.</p>
+        <ul class="service-list">
+          <li>Konsept Üretimi &amp; Uyarlama</li>
+          <li>Görsel Tasarım</li>
+          <li>3D Modelleme</li>
+          <li>Açılış Filmleri &amp; Prodüksiyon</li>
+          <li>Icebreaker &amp; Flash Mob</li>
+        </ul>
+        <span class="service-more">Detaylar <i>→</i></span>
+      </div>
+
+      <div class="service-card tilt-card reveal-up">
+        <span class="service-num">03</span>
+        <h3>Uçak Bileti</h3>
+        <p>THY, Lufthansa, Emirates ve Qatar Airways başta olmak üzere yurt içi &amp; yurt dışı tüm biletleme operasyonları.</p>
+        <span class="service-more">Detaylar <i>→</i></span>
+      </div>
+
+      <div class="service-card tilt-card reveal-up">
+        <span class="service-num">04</span>
+        <h3>Vize, Konaklama &amp; Transfer</h3>
+        <p>TURSAB üyesi olarak yılda ortalama 10.000 gecelik konaklama ve 1.200 vize işlemini güçlü bir ekiple yönetiyoruz.</p>
+        <span class="service-more">Detaylar <i>→</i></span>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="online" id="online">
+    <div class="online-media reveal-clip">
+      <div class="online-frame tilt-card">
+        <img src="assets/img/broadcast-stage.jpg" alt="Online yayın ve hibrit etkinlik prodüksiyonu">
+        <div class="online-play">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5Z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="online-content">
+      <p class="eyebrow reveal-up">Hibrit &amp; Online Çözümler</p>
+      <h2 class="reveal-up">Online Platformda Neler Yapabiliriz</h2>
+      <ul class="check-list">
+        <li class="reveal-up"><i>✓</i> Lansmanlar &amp; Açılışlar</li>
+        <li class="reveal-up"><i>✓</i> Bayi Toplantıları</li>
+        <li class="reveal-up"><i>✓</i> Hibrit Etkinlikler</li>
+        <li class="reveal-up"><i>✓</i> Ödül Törenleri &amp; Partiler</li>
+        <li class="reveal-up"><i>✓</i> İç İletişim Toplantıları</li>
+        <li class="reveal-up"><i>✓</i> Basın Toplantıları</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Nasıl Çalışıyoruz</p>
+      <h2 class="reveal-up">Fikirden Sahneye</h2>
+    </div>
+    <div class="process-track">
+      <div class="process-line"><div class="process-line-fill"></div></div>
+      <div class="process-step reveal-up">
+        <span class="process-num">01</span>
+        <h4>Keşif &amp; Strateji</h4>
+        <p>Marka stratejinizi ve hedeflerinizi anlıyor, doğru bütçe optimizasyonunu kuruyoruz.</p>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-num">02</span>
+        <h4>Konsept &amp; Tasarım</h4>
+        <p>Fark yaratan içerik, 3D modelleme ve görsel dil ile konsepti hayata geçiriyoruz.</p>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-num">03</span>
+        <h4>Prodüksiyon &amp; Lojistik</h4>
+        <p>Konaklama, transfer, vize ve biletlemeye kadar tüm operasyonu koordine ediyoruz.</p>
+      </div>
+      <div class="process-step reveal-up">
+        <span class="process-num">04</span>
+        <h4>Sahne &amp; Uygulama</h4>
+        <p>Etkinlik gününde her detayı sahada yönetip unutulmaz bir deneyim sunuyoruz.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="references" id="references">
+    <div class="section-head">
+      <p class="eyebrow reveal-up">Referanslar</p>
+      <h2 class="reveal-up">48+ Markanın Güvendiği Ekip</h2>
+      <p class="section-sub reveal-up">Birlikte, başarı ile gerçekleştirdik...</p>
+    </div>
+
+    <div class="marquee-wrap">
+      <div class="marquee-row">
+        <div class="marquee-track" id="track1"></div>
+      </div>
+      <div class="marquee-row marquee-row-rev">
+        <div class="marquee-track" id="track2"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-split">
+      <div class="contact-info">
+        <p class="eyebrow reveal-up">Bize Ulaşın</p>
+        <h2 class="reveal-up">Projenizi<br>Konuşalım</h2>
+        <p class="reveal-up contact-sub">We'd love to hear from you.</p>
+
+        <ul class="contact-list">
+          <li class="reveal-up"><a href="mailto:hello@socrates.com.tr">
+            <span class="contact-list-label">E-posta</span>
+            <span class="contact-list-value">hello@socrates.com.tr</span>
+          </a></li>
+          <li class="reveal-up"><a href="tel:+902123233835">
+            <span class="contact-list-label">Telefon</span>
+            <span class="contact-list-value">+90 212 323 38 35</span>
+          </a></li>
+          <li class="reveal-up"><a href="https://wa.me/905330987545" target="_blank" rel="noopener">
+            <span class="contact-list-label">WhatsApp</span>
+            <span class="contact-list-value">+90 533 098 75 45</span>
+          </a></li>
+          <li class="reveal-up"><a href="https://instagram.com/socratesevent" target="_blank" rel="noopener">
+            <span class="contact-list-label">Instagram</span>
+            <span class="contact-list-value">@socratesevent</span>
+          </a></li>
+        </ul>
+
+        <a href="mailto:hello@socrates.com.tr" class="btn btn-solid reveal-up">Projenizi Anlatın</a>
+      </div>
+
+      <div class="contact-map reveal-clip">
+        <div class="contact-map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Baltaliman%C4%B1+Cad.+Hisar+Palas+Apt.+No:31/17A,+Sar%C4%B1yer/%C4%B0stanbul&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Socrates Creative Events konum haritası">
+          </iframe>
+        </div>
+        <div class="contact-map-caption">
+          <div>
+            <strong>Ofisimiz</strong>
+            <span>Baltalimanı Cad. Hisar Palas Apt. No:31/17A, Sarıyer / İstanbul</span>
+          </div>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Baltaliman%C4%B1+Cad.+Hisar+Palas+Apt.+No:31/17A,+Sar%C4%B1yer/%C4%B0stanbul" target="_blank" rel="noopener" class="btn-direction">
+            <svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+            Yol Tarifi Al
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-logo">
+      <span class="nav-logo-mark">S</span>
+      <span class="nav-logo-text">SOCRATES<em>Creative Events</em></span>
+    </div>
+    <nav class="footer-links">
+      <a href="#top">Ana Sayfa</a>
+      <a href="#about">Hakkımızda</a>
+      <a href="#services">Hizmetler</a>
+      <a href="#references">Referanslar</a>
+      <a href="#contact">İletişim</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Socrates Creative Events — konsept çalışması.</p>
+    <p class="footer-disclaimer">Bu sayfa <a href="https://www.socratesevent.com/" target="_blank" rel="noopener">socratesevent.com</a> için hazırlanmış bağımsız bir UI/UX &amp; motion design yeniden tasarım vitrinidir; Socrates Creative Events ile resmi bir bağlantısı yoktur.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
