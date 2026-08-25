@@ -256,7 +256,14 @@ main{ position: relative; }
 
 /* ============ ABOUT ============ */
 .about{ display:grid; grid-template-columns: .85fr 1.15fr; gap: 6vw; align-items:center; }
-.about-media{ position:relative; }
+.about-media{
+  position:relative; width:100%;
+  /* Every child of .about-media-frame is position:absolute (video +
+     vignette), so this grid item has zero in-flow content to size itself
+     from. Without an explicit width, Grid's auto min-width computation
+     can collapse it toward ~0 — most visible in the single-column mobile
+     layout. width:100% forces it to fill its track regardless. */
+}
 .about-media-frame{
   position:relative; overflow:hidden; aspect-ratio: 4/5;
   border:1px solid var(--border); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
