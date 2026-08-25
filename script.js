@@ -160,34 +160,103 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- about video: scroll parallax ---------- */
-  // Lightweight version of the scroll-scrubbed hero on ugurcihancekic.com —
-  // that one pins a full-viewport section and locks a frame to scroll
-  // position; this is the same idea scaled down for a normal in-page
-  // element: no pinning, just a soft vertical drift tied to how far the
-  // frame is from viewport-center, so the video is never fully still while
-  // scrolling past it.
-  const aboutVideo = $('.about-media-video');
-  if (aboutVideo && !prefersReduced){
-    const aboutFrame = aboutVideo.closest('.about-media-frame');
-    let aboutRafPending = false;
-    const MAX_SHIFT = 26; // px — stays well inside the 15% oversize headroom
+  /* ---------- about video: scroll-scrubbed sprite canvas ---------- */
+  // Same technique as the ugurcihancekic.com hero (see .hero-video in that
+  // project): a tall wrapper (.about) supplies scroll room, a sticky inner
+  // block (.about-pin) holds position while that room is consumed, and a
+  // canvas draws whichever sprite-sheet frame matches how far through the
+  // wrapper the user has scrolled — so the section doesn't release to the
+  // next one until the clip has played through.
+  //
+  // Disabled on mobile (see the max-width:900px block in style.css): a
+  // sticky block taller than a short mobile viewport just gets cut off
+  // rather than scrolled, which would trap the text column off-screen.
+  // Mobile instead autoplays through the same sprite on a simple timer,
+  // like a normal looping video.
+  const aboutWrapper = $('.about');
+  const aboutCanvas = $('.about-media-canvas');
+  if (aboutWrapper && aboutCanvas){
+    const cols = parseInt(aboutCanvas.dataset.cols, 10);
+    const rows = parseInt(aboutCanvas.dataset.rows, 10);
+    const totalFrames = parseInt(aboutCanvas.dataset.frames, 10);
+    const actx2 = aboutCanvas.getContext('2d');
+    const sprite2 = new Image();
+    sprite2.decoding = 'async';
+    let sprite2Ready = false;
+    let frameW2 = 0, frameH2 = 0;
+    let currentFrame2 = 0, targetFrame2 = 0;
 
-    function updateAboutParallax(){
-      aboutRafPending = false;
-      const rect = aboutFrame.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // -1 when the frame's center is at the bottom edge, 0 at viewport
-      // center, +1 at the top edge.
-      const centerOffset = (rect.top + rect.height / 2) - vh / 2;
-      const progress = Math.max(-1, Math.min(1, centerOffset / (vh / 2 + rect.height / 2)));
-      aboutVideo.style.transform = `translateY(${(-progress * MAX_SHIFT).toFixed(1)}px)`;
+    function resizeAboutCanvas(){
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const frameEl = aboutCanvas.parentElement;
+      aboutCanvas.width = Math.round(frameEl.clientWidth * dpr);
+      aboutCanvas.height = Math.round(frameEl.clientHeight * dpr);
     }
-    document.addEventListener('scroll', () => {
-      if (!aboutRafPending){ aboutRafPending = true; requestAnimationFrame(updateAboutParallax); }
-    }, { passive:true });
-    window.addEventListener('resize', updateAboutParallax);
-    updateAboutParallax();
+
+    function drawAboutFrame(index){
+      if (!sprite2Ready) return;
+      index = Math.max(0, Math.min(totalFrames - 1, Math.round(index)));
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      const scale = Math.max(aboutCanvas.width / frameW2, aboutCanvas.height / frameH2);
+      const drawW = frameW2 * scale, drawH = frameH2 * scale;
+      const dx = (aboutCanvas.width - drawW) / 2, dy = (aboutCanvas.height - drawH) / 2;
+      actx2.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
+      actx2.drawImage(sprite2, col * frameW2, row * frameH2, frameW2, frameH2, dx, dy, drawW, drawH);
+    }
+
+    sprite2.onload = () => {
+      frameW2 = sprite2.naturalWidth / cols;
+      frameH2 = sprite2.naturalHeight / rows;
+      sprite2Ready = true;
+      resizeAboutCanvas();
+      targetFrame2 = prefersReduced ? totalFrames - 1 : 0; // reduced motion: land on the logo, static
+      currentFrame2 = targetFrame2;
+      drawAboutFrame(currentFrame2);
+    };
+    sprite2.src = aboutCanvas.dataset.sprite;
+
+    const isDesktopPin = window.matchMedia('(min-width: 901px)').matches;
+
+    if (prefersReduced){
+      // Static hold on the final frame, set once above — no listeners.
+    } else if (isDesktopPin){
+      let aboutTicking = false;
+      function computeAboutTarget(){
+        aboutTicking = false;
+        const scrollable = aboutWrapper.offsetHeight - window.innerHeight;
+        if (scrollable <= 0) return;
+        const rect = aboutWrapper.getBoundingClientRect();
+        const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
+        targetFrame2 = progress * (totalFrames - 1);
+      }
+      function onAboutScroll(){
+        if (!aboutTicking){ aboutTicking = true; requestAnimationFrame(computeAboutTarget); }
+      }
+      function tickAbout(){
+        currentFrame2 += (targetFrame2 - currentFrame2) * 0.25;
+        if (Math.abs(targetFrame2 - currentFrame2) < 0.05) currentFrame2 = targetFrame2;
+        drawAboutFrame(currentFrame2);
+        requestAnimationFrame(tickAbout);
+      }
+      document.addEventListener('scroll', onAboutScroll, { passive:true });
+      window.addEventListener('resize', () => { resizeAboutCanvas(); onAboutScroll(); });
+      requestAnimationFrame(tickAbout);
+    } else {
+      // Mobile: no pin, just loop through the sprite like a normal video.
+      const FPS = 6; // matches the sprite sheet's own capture rate
+      let lastAdvance = performance.now();
+      function tickMobile(now){
+        if (now - lastAdvance >= 1000 / FPS){
+          lastAdvance = now;
+          currentFrame2 = (currentFrame2 + 1) % totalFrames;
+          drawAboutFrame(currentFrame2);
+        }
+        requestAnimationFrame(tickMobile);
+      }
+      window.addEventListener('resize', resizeAboutCanvas);
+      requestAnimationFrame(tickMobile);
+    }
   }
 
   /* ---------- references marquee ---------- */

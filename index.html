@@ -69,11 +69,6 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<div class="concept-badge">
-  <span>Konsept Yeniden Tasarım</span>
-  <a href="https://www.socratesevent.com/" target="_blank" rel="noopener">Orijinal site ↗</a>
-</div>
-
 <div class="progress-bar" id="progressBar"></div>
 
 <header class="nav" id="nav">
@@ -146,12 +141,12 @@
   </div>
 
   <section class="about" id="about">
+   <div class="about-pin">
     <div class="about-media reveal-clip">
       <div class="about-media-frame tilt-card">
-        <video class="about-media-video" autoplay muted loop playsinline
-               poster="assets/img/about-poster.jpg" aria-label="Socrates Creative Events marka filmi">
-          <source src="assets/videos/about.mp4" type="video/mp4">
-        </video>
+        <canvas class="about-media-canvas"
+                data-sprite="assets/img/about-sprite.jpg" data-cols="10" data-rows="6" data-frames="60"
+                aria-label="Socrates Creative Events marka filmi"></canvas>
         <div class="about-media-vignette"></div>
       </div>
       <div class="about-media-badge">
@@ -183,6 +178,7 @@
         </div>
       </div>
     </div>
+   </div>
   </section>
 
   <section class="services" id="services">
@@ -369,8 +365,7 @@
     </nav>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Socrates Creative Events — konsept çalışması.</p>
-    <p class="footer-disclaimer">Bu sayfa <a href="https://www.socratesevent.com/" target="_blank" rel="noopener">socratesevent.com</a> için hazırlanmış bağımsız bir UI/UX &amp; motion design yeniden tasarım vitrinidir; Socrates Creative Events ile resmi bir bağlantısı yoktur.</p>
+    <p>© 2026 Socrates Creative Events. Tüm hakları saklıdır.</p>
   </div>
 </footer>
 
