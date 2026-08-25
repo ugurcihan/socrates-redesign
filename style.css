@@ -262,6 +262,14 @@ main{ position: relative; }
   border:1px solid var(--border); box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
 }
 .about-media-frame img{ width:100%; height:100%; object-fit:cover; filter: saturate(.85) contrast(1.05) sepia(.08); }
+.about-media-video{
+  /* Oversized + inset beyond the frame's edges so the JS parallax below
+     can translate it without ever exposing empty space at top/bottom. */
+  position:absolute; inset:-15% 0; width:100%; height:130%;
+  object-fit:cover; display:block;
+  filter: saturate(.85) contrast(1.05) sepia(.08);
+  will-change: transform;
+}
 .about-media-vignette{
   position:absolute; inset:0;
   background: linear-gradient(200deg, rgba(10,9,8,.35), transparent 55%);

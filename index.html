@@ -148,7 +148,13 @@
   <section class="about" id="about">
     <div class="about-media reveal-clip">
       <div class="about-media-frame tilt-card">
-        <img src="assets/img/vertical-shot.jpg" alt="Socrates Creative Events sahne prodüksiyonu">
+        <!-- No source file yet — drop a vertical (4:5 or 9:16) clip at
+             assets/videos/about.mp4 and it plays automatically. Until then
+             the poster image below shows, so nothing looks broken. -->
+        <video class="about-media-video" autoplay muted loop playsinline
+               poster="assets/img/vertical-shot.jpg" aria-label="Socrates Creative Events sahne prodüksiyonu">
+          <source src="assets/videos/about.mp4" type="video/mp4">
+        </video>
         <div class="about-media-vignette"></div>
       </div>
       <div class="about-media-badge">

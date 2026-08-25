@@ -160,6 +160,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ---------- about video: scroll parallax ---------- */
+  // Lightweight version of the scroll-scrubbed hero on ugurcihancekic.com —
+  // that one pins a full-viewport section and locks a frame to scroll
+  // position; this is the same idea scaled down for a normal in-page
+  // element: no pinning, just a soft vertical drift tied to how far the
+  // frame is from viewport-center, so the video is never fully still while
+  // scrolling past it.
+  const aboutVideo = $('.about-media-video');
+  if (aboutVideo && !prefersReduced){
+    const aboutFrame = aboutVideo.closest('.about-media-frame');
+    let aboutRafPending = false;
+    const MAX_SHIFT = 26; // px — stays well inside the 15% oversize headroom
+
+    function updateAboutParallax(){
+      aboutRafPending = false;
+      const rect = aboutFrame.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // -1 when the frame's center is at the bottom edge, 0 at viewport
+      // center, +1 at the top edge.
+      const centerOffset = (rect.top + rect.height / 2) - vh / 2;
+      const progress = Math.max(-1, Math.min(1, centerOffset / (vh / 2 + rect.height / 2)));
+      aboutVideo.style.transform = `translateY(${(-progress * MAX_SHIFT).toFixed(1)}px)`;
+    }
+    document.addEventListener('scroll', () => {
+      if (!aboutRafPending){ aboutRafPending = true; requestAnimationFrame(updateAboutParallax); }
+    }, { passive:true });
+    window.addEventListener('resize', updateAboutParallax);
+    updateAboutParallax();
+  }
+
   /* ---------- references marquee ---------- */
   // Real brand colors (not their exact logo artwork/typeface — the source
   // site only had these as one flattened collage image, no individual
