@@ -265,23 +265,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initSpriteScrub('.online', '.online-media-canvas');
 
   /* ---------- references marquee ---------- */
-  // Real brand colors (not their exact logo artwork/typeface — the source
-  // site only had these as one flattened collage image, no individual
-  // vector logos to copy) — this gives the wall genuine color without
-  // reproducing anyone's trademarked logo graphic.
+  // Real logos, cropped from the client's own reference wall (their site
+  // only ever had these as one flattened collage image — no individual
+  // files existed — so each was cut out, aligned and cleaned locally).
   const brands = [
-    ["L'Oréal","#d4af37"], ["Divan","#4f83cc"], ["Koç","#e4032e"], ["Inveo","#2f6fed"],
-    ["Colgate","#e4032e"], ["Prada","#c9a463"], ["TEB Arval","#00a651"], ["Vichy","#009cde"],
-    ["Gedik Yatırım","#ffcc00"], ["Sompo","#e4032e"], ["Avixa","#7c3aed"], ["MRC","#64748b"],
-    ["Kérastase","#b8860b"], ["Hacı Şakir","#c0392b"], ["Kiehl's","#7a1f27"], ["Lancôme","#d4145a"],
-    ["Y.T.Ü.","#3b6ea5"], ["Meridol","#0077b6"], ["Aveda","#2e7d32"], ["L'Oréal Professionnel","#d4af37"],
-    ["Garnier","#7cb342"], ["Ray Sigorta","#ef4444"], ["Tupperware","#6a1b9a"], ["Healy","#5eb8b0"],
-    ["Ceva","#0057a3"], ["Sanovel","#0ea5a4"], ["Hill's","#c0272d"], ["SkinCeuticals","#3b6ea5"],
-    ["Convatec","#7c3aed"], ["Palmolive","#2e7d32"], ["Yves Saint Laurent","#c9a463"], ["Giorgio Armani","#c9a463"],
-    ["Okadoil","#f97316"], ["Hotiç","#7a1f27"], ["CeraVe","#0071ce"], ["Valentino","#a6192e"],
-    ["TEB Cetelem","#00a651"], ["Centurion","#3b6ea5"], ["Montero","#64748b"], ["CeraVe","#0071ce"],
-    ["Maybelline","#e4032e"], ["Demant","#0071ce"], ["ACTherm","#f97316"], ["Royal Roads University","#3b6ea5"],
-    ["HDI Sigorta","#e4032e"], ["La Roche-Posay","#0077b6"], ["Arven","#0ea5a4"], ["Bausch + Lomb","#0057a3"]
+    ["L'Oréal","loreal"], ["Divan","divan"], ["Koç","koc"], ["Inveo","inveo"],
+    ["Colgate","colgate"], ["Prada","prada"], ["TEB Arval","teb-arval"], ["Vichy","vichy"],
+    ["Gedik Yatırım","gedik-yatirim"], ["Sompo","sompo"], ["Avixa","avixa"], ["MRC","mrc"],
+    ["Kérastase","kerastase"], ["Hacı Şakir","haci-sakir"], ["Kiehl's","kiehls"], ["Lancôme","lancome"],
+    ["Y.T.Ü.","ytu"], ["Meridol","meridol"], ["Aveda","aveda"], ["L'Oréal Professionnel","loreal-professionnel"],
+    ["Garnier","garnier"], ["Ray Sigorta","ray-sigorta"], ["Tupperware","tupperware"], ["Healy","healy"],
+    ["Ceva","ceva"], ["Sanovel","sanovel"], ["Hill's","hills"], ["SkinCeuticals","skinceuticals"],
+    ["Convatec","convatec"], ["Palmolive","palmolive"], ["Yves Saint Laurent","ysl"], ["Giorgio Armani","giorgio-armani"],
+    ["Okadoil","okadoil"], ["Hotiç","hotic"], ["CeraVe","cerave-1"], ["Valentino","valentino"],
+    ["TEB Cetelem","teb-cetelem"], ["Centurion","centurion"], ["Montero","montero"], ["CeraVe","cerave-2"],
+    ["Maybelline","maybelline"], ["Demant","demant"], ["ACTherm","actherm"], ["Royal Roads University","royal-roads"],
+    ["HDI Sigorta","hdi-sigorta"], ["La Roche-Posay","la-roche-posay"], ["Arven","arven"], ["Bausch + Lomb","bausch-lomb"]
   ];
   const half = Math.ceil(brands.length / 2);
   const row1 = brands.slice(0, half);
@@ -291,10 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const track = $('#' + id);
     if (!track) return;
     const loopList = list.concat(list); // duplicate for seamless loop
-    track.innerHTML = loopList.map(([name, color], i) => {
-      const size = i % 4 === 2 ? 'small' : 'big';
-      return `<span class="logo-chip ${size}" style="--chip-color:${color}"><span>${name}</span><i>◆</i></span>`;
-    }).join('');
+    track.innerHTML = loopList.map(([name, slug]) =>
+      `<span class="logo-chip"><img src="assets/logos/${slug}.png" alt="${name}" loading="lazy" width="184" height="125"></span>`
+    ).join('');
   }
   fillTrack('track1', row1);
   fillTrack('track2', row2);
