@@ -332,20 +332,23 @@ main{ position: relative; }
 .service-card:hover .service-more{ color: var(--gold); }
 .service-card:hover .service-more i{ transform: translateX(4px); }
 
-/* ============ ONLINE ============ */
-.online{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 6vw; align-items:center; }
+/* ============ ONLINE — scroll-scrubbed sprite video, pinned ============ */
+/* Same technique as .about above (and the ugurcihancekic.com hero): tall
+   wrapper for scroll room, sticky inner block, canvas frame driven by
+   scroll progress. This one is landscape (4:3) instead of portrait. */
+.online{ position:relative; padding:0; min-height:240vh; }
+.online-pin{
+  position:sticky; top:96px;
+  display:grid; grid-template-columns: 1.1fr .9fr; gap:6vw; align-items:center;
+  max-width:var(--container); margin:0 auto; padding:40px 5vw;
+}
+.online-media{ position:relative; width:100%; } /* see .about-media's comment: same zero-intrinsic-content Grid quirk */
 .online-frame{
   position:relative; overflow:hidden; border:1px solid var(--border);
   aspect-ratio: 4/3; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6);
+  background: var(--bg-soft) url('assets/img/online-poster.jpg') center/cover;
 }
-.online-frame img{ width:100%; height:100%; object-fit:cover; filter: brightness(.78) saturate(.9) sepia(.06); }
-.online-play{
-  position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
-  width:62px; height:62px; border-radius:50%; border:1px solid var(--gold);
-  display:flex; align-items:center; justify-content:center; color: var(--gold);
-  padding:20px; cursor:pointer; transition: transform .35s var(--ease), background .35s, color .35s;
-}
-.online-frame:hover .online-play{ transform: translate(-50%,-50%) scale(1.1); background: var(--gold); color: var(--ink); }
+.online-media-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .online-content h2{ margin-bottom: 24px; }
 .check-list{ display:flex; flex-direction:column; margin-top:8px; border-top:1px solid var(--border); }
 .check-list li{ display:flex; align-items:center; gap:14px; font-weight:500; padding: 15px 0; border-bottom:1px solid var(--border); font-size:.95rem; }
@@ -489,7 +492,8 @@ main{ position: relative; }
   .about{ min-height:auto; }
   .about-pin{ position:relative; top:auto; grid-template-columns: 1fr; }
   .about-media{ max-width: 380px; margin: 0 auto 60px; }
-  .online{ grid-template-columns: 1fr; }
+  .online{ min-height:auto; }
+  .online-pin{ position:relative; top:auto; grid-template-columns: 1fr; }
   .online-media{ order:2; }
   .online-content{ order:1; }
   section{ padding: 68px 6vw; }
@@ -529,6 +533,8 @@ main{ position: relative; }
   .ticker-track, .marquee-track{ animation:none; }
   .about{ min-height:auto; }
   .about-pin{ position:relative; top:auto; }
+  .online{ min-height:auto; }
+  .online-pin{ position:relative; top:auto; }
 }
 
 /* touch devices: no custom cursor / tilt */

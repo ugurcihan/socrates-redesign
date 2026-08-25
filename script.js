@@ -160,88 +160,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- about video: scroll-scrubbed sprite canvas ---------- */
+  /* ---------- scroll-scrubbed sprite canvas (about + online) ---------- */
   // Same technique as the ugurcihancekic.com hero (see .hero-video in that
-  // project): a tall wrapper (.about) supplies scroll room, a sticky inner
-  // block (.about-pin) holds position while that room is consumed, and a
-  // canvas draws whichever sprite-sheet frame matches how far through the
-  // wrapper the user has scrolled — so the section doesn't release to the
-  // next one until the clip has played through.
+  // project): a tall wrapper supplies scroll room, a sticky inner block
+  // holds position while that room is consumed, and a canvas draws
+  // whichever sprite-sheet frame matches how far through the wrapper the
+  // user has scrolled — so the section doesn't release to the next one
+  // until the clip has played through.
   //
   // Disabled on mobile (see the max-width:900px block in style.css): a
   // sticky block taller than a short mobile viewport just gets cut off
   // rather than scrolled, which would trap the text column off-screen.
   // Mobile instead autoplays through the same sprite on a simple timer,
   // like a normal looping video.
-  const aboutWrapper = $('.about');
-  const aboutCanvas = $('.about-media-canvas');
-  if (aboutWrapper && aboutCanvas){
-    const cols = parseInt(aboutCanvas.dataset.cols, 10);
-    const rows = parseInt(aboutCanvas.dataset.rows, 10);
-    const totalFrames = parseInt(aboutCanvas.dataset.frames, 10);
-    const actx2 = aboutCanvas.getContext('2d');
-    const sprite2 = new Image();
-    sprite2.decoding = 'async';
-    let sprite2Ready = false;
-    let frameW2 = 0, frameH2 = 0;
-    let currentFrame2 = 0, targetFrame2 = 0;
+  function initSpriteScrub(wrapperSel, canvasSel){
+    const wrapper = $(wrapperSel);
+    const canvas = $(canvasSel);
+    if (!wrapper || !canvas) return;
 
-    function resizeAboutCanvas(){
+    const cols = parseInt(canvas.dataset.cols, 10);
+    const rows = parseInt(canvas.dataset.rows, 10);
+    const totalFrames = parseInt(canvas.dataset.frames, 10);
+    const ctx = canvas.getContext('2d');
+    const sprite = new Image();
+    sprite.decoding = 'async';
+    let spriteReady = false;
+    let frameW = 0, frameH = 0;
+    let currentFrame = 0, targetFrame = 0;
+
+    function resizeCanvas(){
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const frameEl = aboutCanvas.parentElement;
-      aboutCanvas.width = Math.round(frameEl.clientWidth * dpr);
-      aboutCanvas.height = Math.round(frameEl.clientHeight * dpr);
+      const frameEl = canvas.parentElement;
+      canvas.width = Math.round(frameEl.clientWidth * dpr);
+      canvas.height = Math.round(frameEl.clientHeight * dpr);
     }
 
-    function drawAboutFrame(index){
-      if (!sprite2Ready) return;
+    function drawFrame(index){
+      if (!spriteReady) return;
       index = Math.max(0, Math.min(totalFrames - 1, Math.round(index)));
       const col = index % cols;
       const row = Math.floor(index / cols);
-      const scale = Math.max(aboutCanvas.width / frameW2, aboutCanvas.height / frameH2);
-      const drawW = frameW2 * scale, drawH = frameH2 * scale;
-      const dx = (aboutCanvas.width - drawW) / 2, dy = (aboutCanvas.height - drawH) / 2;
-      actx2.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
-      actx2.drawImage(sprite2, col * frameW2, row * frameH2, frameW2, frameH2, dx, dy, drawW, drawH);
+      const scale = Math.max(canvas.width / frameW, canvas.height / frameH);
+      const drawW = frameW * scale, drawH = frameH * scale;
+      const dx = (canvas.width - drawW) / 2, dy = (canvas.height - drawH) / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(sprite, col * frameW, row * frameH, frameW, frameH, dx, dy, drawW, drawH);
     }
 
-    sprite2.onload = () => {
-      frameW2 = sprite2.naturalWidth / cols;
-      frameH2 = sprite2.naturalHeight / rows;
-      sprite2Ready = true;
-      resizeAboutCanvas();
-      targetFrame2 = prefersReduced ? totalFrames - 1 : 0; // reduced motion: land on the logo, static
-      currentFrame2 = targetFrame2;
-      drawAboutFrame(currentFrame2);
+    sprite.onload = () => {
+      frameW = sprite.naturalWidth / cols;
+      frameH = sprite.naturalHeight / rows;
+      spriteReady = true;
+      resizeCanvas();
+      targetFrame = prefersReduced ? totalFrames - 1 : 0; // reduced motion: land on the logo, static
+      currentFrame = targetFrame;
+      drawFrame(currentFrame);
     };
-    sprite2.src = aboutCanvas.dataset.sprite;
+    sprite.src = canvas.dataset.sprite;
 
     const isDesktopPin = window.matchMedia('(min-width: 901px)').matches;
 
     if (prefersReduced){
       // Static hold on the final frame, set once above — no listeners.
     } else if (isDesktopPin){
-      let aboutTicking = false;
-      function computeAboutTarget(){
-        aboutTicking = false;
-        const scrollable = aboutWrapper.offsetHeight - window.innerHeight;
+      let ticking = false;
+      function computeTarget(){
+        ticking = false;
+        const scrollable = wrapper.offsetHeight - window.innerHeight;
         if (scrollable <= 0) return;
-        const rect = aboutWrapper.getBoundingClientRect();
+        const rect = wrapper.getBoundingClientRect();
         const progress = Math.min(1, Math.max(0, -rect.top / scrollable));
-        targetFrame2 = progress * (totalFrames - 1);
+        targetFrame = progress * (totalFrames - 1);
       }
-      function onAboutScroll(){
-        if (!aboutTicking){ aboutTicking = true; requestAnimationFrame(computeAboutTarget); }
+      function onScroll(){
+        if (!ticking){ ticking = true; requestAnimationFrame(computeTarget); }
       }
-      function tickAbout(){
-        currentFrame2 += (targetFrame2 - currentFrame2) * 0.25;
-        if (Math.abs(targetFrame2 - currentFrame2) < 0.05) currentFrame2 = targetFrame2;
-        drawAboutFrame(currentFrame2);
-        requestAnimationFrame(tickAbout);
+      function tick(){
+        currentFrame += (targetFrame - currentFrame) * 0.25;
+        if (Math.abs(targetFrame - currentFrame) < 0.05) currentFrame = targetFrame;
+        drawFrame(currentFrame);
+        requestAnimationFrame(tick);
       }
-      document.addEventListener('scroll', onAboutScroll, { passive:true });
-      window.addEventListener('resize', () => { resizeAboutCanvas(); onAboutScroll(); });
-      requestAnimationFrame(tickAbout);
+      document.addEventListener('scroll', onScroll, { passive:true });
+      window.addEventListener('resize', () => { resizeCanvas(); onScroll(); });
+      requestAnimationFrame(tick);
     } else {
       // Mobile: no pin, just loop through the sprite like a normal video.
       const FPS = 6; // matches the sprite sheet's own capture rate
@@ -249,15 +251,18 @@ document.addEventListener('DOMContentLoaded', () => {
       function tickMobile(now){
         if (now - lastAdvance >= 1000 / FPS){
           lastAdvance = now;
-          currentFrame2 = (currentFrame2 + 1) % totalFrames;
-          drawAboutFrame(currentFrame2);
+          currentFrame = (currentFrame + 1) % totalFrames;
+          drawFrame(currentFrame);
         }
         requestAnimationFrame(tickMobile);
       }
-      window.addEventListener('resize', resizeAboutCanvas);
+      window.addEventListener('resize', resizeCanvas);
       requestAnimationFrame(tickMobile);
     }
   }
+
+  initSpriteScrub('.about', '.about-media-canvas');
+  initSpriteScrub('.online', '.online-media-canvas');
 
   /* ---------- references marquee ---------- */
   // Real brand colors (not their exact logo artwork/typeface — the source
